@@ -1,0 +1,96 @@
+﻿@model IEnumerable<ventaTickets.Models.Show>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.descripcion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.direccion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.imagen)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.cantCampo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.precioCampo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.cantPlateaBaja)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.precioPlateaBaja)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.cantPlateaAlta)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.precioPlateaAlta)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.fecha)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.direccion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.imagen)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.cantCampo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.precioCampo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.cantPlateaBaja)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.precioPlateaBaja)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.cantPlateaAlta)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.precioPlateaAlta)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.fecha)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.showId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.showId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.showId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
