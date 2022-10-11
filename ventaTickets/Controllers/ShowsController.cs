@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ventaTickets.Models;
 
+// PRUEBA COMENTARIO
+
 namespace ventaTickets.Controllers
 {
     public class ShowsController : Controller
