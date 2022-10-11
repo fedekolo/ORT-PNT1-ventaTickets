@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using ventaTickets.Models;
 
 // PRUEBA COMENTARIO
+//prueba dos
 
 namespace ventaTickets.Controllers
 {
