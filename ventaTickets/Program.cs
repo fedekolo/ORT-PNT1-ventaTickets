@@ -5,7 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 //    options.UseSqlServer(builder.Configuration.GetConnectionString("ventaTicketsContext") ?? throw new InvalidOperationException("Connection string 'ventaTicketsContext' not found.")));
 
 builder.Services.AddDbContext<ventaTicketsContext>(options =>
-    options.UseSqlite(@"filename=C:\Temp\ventaTickets.db"));
+    options.UseSqlite(@"filename=db\ventaTickets.db"));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
