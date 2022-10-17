@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using ventaTickets.Models;
 
 namespace ventaTickets.Controllers
@@ -7,6 +8,7 @@ namespace ventaTickets.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+       
 
         public HomeController(ILogger<HomeController> logger)
         {
@@ -15,8 +17,9 @@ namespace ventaTickets.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction("index2", "Shows");
         }
+
 
         public IActionResult Privacy()
         {
@@ -28,5 +31,25 @@ namespace ventaTickets.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }

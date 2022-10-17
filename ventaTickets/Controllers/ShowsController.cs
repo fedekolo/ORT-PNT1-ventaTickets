@@ -184,5 +184,32 @@ namespace ventaTickets.Controllers
 
             generarEntradas(show);
         }
+
+
+
+        // GET: Shows
+        public async Task<IActionResult> Index2()
+        {
+            return View(await _context.Show.ToListAsync());
+        }
+
+
+
+
+
+
+
     }
+
+
+
+
+
+
+
+
+
+
+
+
 }
