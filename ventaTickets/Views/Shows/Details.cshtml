@@ -35,7 +35,7 @@
         <dd class = "col-sm-10">
             <img src="@Html.DisplayFor(model => model.imagen)">
         </dd>
-        <dt class = "col-sm-2">
+       @* <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.cantCampo)
         </dt>
         <dd class = "col-sm-10">
@@ -70,13 +70,17 @@
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.precioPlateaAlta)
-        </dd>
+        </dd>*@
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.fecha)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.fecha)
         </dd>
+
+        <button type="button" class="btn btn-success btn-lg">Comprar</button>
+
+
     </dl>
 </div>
 <div>
