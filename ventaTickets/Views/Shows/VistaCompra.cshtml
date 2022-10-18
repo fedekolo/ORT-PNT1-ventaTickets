@@ -1,0 +1,96 @@
+﻿@model ventaTickets.Models.Show
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Vista de compra</h1>
+
+<div>
+    <h4>Detalles</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.nombre)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.nombre)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.descripcion)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.descripcion)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.direccion)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.direccion)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.fecha)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.fecha)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.imagen)
+        </dt>
+        <dd class="col-sm-10">
+            <img src="@Html.DisplayFor(model => model.imagen)">
+        </dd>
+
+        <select class="form-select" aria-label="Default select example">
+            <option value="1">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.cantCampo)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.cantCampo)
+                </dd>
+            </option>
+            <option value="2">Platea baja</option>
+            <option value="3">Platea alta</option>
+        </select>
+
+        <dt class = "col-sm-2">
+        @Html.DisplayNameFor(model => model.precioCampo)
+        </dt>
+        <dd class = "col-sm-10">
+        @Html.DisplayFor(model => model.precioCampo)
+        </dd>
+        <dt class = "col-sm-2">
+        @Html.DisplayNameFor(model => model.cantPlateaBaja)
+        </dt>
+        <dd class = "col-sm-10">
+        @Html.DisplayFor(model => model.cantPlateaBaja)
+        </dd>
+        <dt class = "col-sm-2">
+        @Html.DisplayNameFor(model => model.precioPlateaBaja)
+        </dt>
+        <dd class = "col-sm-10">
+        @Html.DisplayFor(model => model.precioPlateaBaja)
+        </dd>
+        <dt class = "col-sm-2">
+        @Html.DisplayNameFor(model => model.cantPlateaAlta)
+        </dt>
+        <dd class = "col-sm-10">
+        @Html.DisplayFor(model => model.cantPlateaAlta)
+        </dd>
+        <dt class = "col-sm-2">
+        @Html.DisplayNameFor(model => model.precioPlateaAlta)
+        </dt>
+        <dd class = "col-sm-10">
+        @Html.DisplayFor(model => model.precioPlateaAlta)
+        </dd>
+
+        <button type="button" class="btn btn-success btn-lg" onclick="location.href='@Url.Action("Details", "Shows", new { id = @Html.DisplayFor(model => model.showId)})'">Comprar</button>
+
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.showId">Edit</a> |
+    <a asp-action="index2">Volver a la Cartelera</a>
+</div>

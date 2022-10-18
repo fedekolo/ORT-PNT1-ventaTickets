@@ -7,28 +7,16 @@
 
 <h1 >Shows Disponibles</h1>
 
-<body style=" background: linear-gradient(to right, #E5E5BE, #003973)">
-
-<table class="table"   >
-    <thead>
-    <tbody>
-        <div >
-        <center>
+<body class="body-index2">
+    <div class="full-container">
+        <div class="shows">
         @foreach (var item in Model)
         {
-
-               // <img src="@Html.DisplayFor(modelItem => item.imagen)">
-           
-              <input style="width : 500px; heigth : 500px" type="image" src="@Html.DisplayFor(modelItem => item.imagen)" onclick="location.href='@Url.Action("Details", "Shows", new { id = item.showId })'" />
-            
-
-
-
+                <input class="show" 
+                       type="image" 
+                       src="@Html.DisplayFor(modelItem => item.imagen)" 
+                       onclick="location.href='@Url.Action("Details", "Shows", new { id = item.showId })'" />
         }
-         </center>
-            </div>
-            
-    </tbody>
-</table>
-
+        </div>
+    </div>   
 </body>

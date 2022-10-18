@@ -78,7 +78,7 @@
             @Html.DisplayFor(model => model.fecha)
         </dd>
 
-        <button type="button" class="btn btn-success btn-lg">Comprar</button>
+        <button type="button" class="btn btn-success btn-lg" onclick="location.href='@Url.Action("VistaCompra", "Shows", new { id = @Html.DisplayFor(model => model.showId) })'">Comprar</button>
 
 
     </dl>

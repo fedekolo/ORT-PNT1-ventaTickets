@@ -185,31 +185,30 @@ namespace ventaTickets.Controllers
             generarEntradas(show);
         }
 
-
-
-        // GET: Shows
+        // GET: Index2
         public async Task<IActionResult> Index2()
         {
             return View(await _context.Show.ToListAsync());
         }
 
+        // GET: Shows/VistaCompra/5
+        public async Task<IActionResult> VistaCompra(int? id)
+        {
+            if (id == null || _context.Show == null)
+            {
+                return NotFound();
+            }
 
+            var show = await _context.Show
+                .FirstOrDefaultAsync(m => m.showId == id);
+            if (show == null)
+            {
+                return NotFound();
+            }
 
-
-
-
+            return View(show);
+        }
 
     }
-
-
-
-
-
-
-
-
-
-
-
 
 }
