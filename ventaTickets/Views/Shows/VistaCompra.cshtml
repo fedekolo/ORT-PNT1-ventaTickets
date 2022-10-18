@@ -42,52 +42,26 @@
             <img src="@Html.DisplayFor(model => model.imagen)">
         </dd>
 
-        <select class="form-select" aria-label="Default select example">
-            <option value="1">
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.cantCampo)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.cantCampo)
-                </dd>
-            </option>
-            <option value="2">Platea baja</option>
-            <option value="3">Platea alta</option>
-        </select>
+        <form onsubmit="location.href='@Url.Action("Details", "Shows", new { id = @Model.showId})'">
+            <select class="form-sector" aria-label="Default select example" required>
+                <option disabled selected value="">
+                    Selecciona una opción
+                </option>
+                <option value="1">
+                    Campo - $@Model.precioCampo
+                </option>
+                <option value="2">
+                    Platea Baja - $@Model.precioPlateaBaja
+                </option>
+                <option value="3">
+                    Platea Alta - $@Model.precioPlateaAlta
+                </option>
+            </select>
 
-        <dt class = "col-sm-2">
-        @Html.DisplayNameFor(model => model.precioCampo)
-        </dt>
-        <dd class = "col-sm-10">
-        @Html.DisplayFor(model => model.precioCampo)
-        </dd>
-        <dt class = "col-sm-2">
-        @Html.DisplayNameFor(model => model.cantPlateaBaja)
-        </dt>
-        <dd class = "col-sm-10">
-        @Html.DisplayFor(model => model.cantPlateaBaja)
-        </dd>
-        <dt class = "col-sm-2">
-        @Html.DisplayNameFor(model => model.precioPlateaBaja)
-        </dt>
-        <dd class = "col-sm-10">
-        @Html.DisplayFor(model => model.precioPlateaBaja)
-        </dd>
-        <dt class = "col-sm-2">
-        @Html.DisplayNameFor(model => model.cantPlateaAlta)
-        </dt>
-        <dd class = "col-sm-10">
-        @Html.DisplayFor(model => model.cantPlateaAlta)
-        </dd>
-        <dt class = "col-sm-2">
-        @Html.DisplayNameFor(model => model.precioPlateaAlta)
-        </dt>
-        <dd class = "col-sm-10">
-        @Html.DisplayFor(model => model.precioPlateaAlta)
-        </dd>
+            <input type="number" class="form-control" min="1" max="5" required>
 
-        <button type="button" class="btn btn-success btn-lg" onclick="location.href='@Url.Action("Details", "Shows", new { id = @Html.DisplayFor(model => model.showId)})'">Comprar</button>
-
+            <button type="submit" class="btn btn-success btn-lg">Confirmar compra</button>
+        </form>
     </dl>
 </div>
 <div>

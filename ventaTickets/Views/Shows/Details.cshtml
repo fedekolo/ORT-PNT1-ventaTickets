@@ -35,6 +35,9 @@
         <dd class = "col-sm-10">
             <img src="@Html.DisplayFor(model => model.imagen)">
         </dd>
+       
+
+@*        ---- ESTA INFORMACIÓN VUELVE CUANDO HAYA UN ADMINISTRADOR ---- *@
        @* <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.cantCampo)
         </dt>
@@ -71,6 +74,8 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.precioPlateaAlta)
         </dd>*@
+
+
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.fecha)
         </dt>
@@ -78,7 +83,7 @@
             @Html.DisplayFor(model => model.fecha)
         </dd>
 
-        <button type="button" class="btn btn-success btn-lg" onclick="location.href='@Url.Action("VistaCompra", "Shows", new { id = @Html.DisplayFor(model => model.showId) })'">Comprar</button>
+        <button type="button" class="btn btn-success btn-lg" onclick="location.href='@Url.Action("VistaCompra", "Shows", new { id = @Model.showId })'">Comprar</button>
 
 
     </dl>
