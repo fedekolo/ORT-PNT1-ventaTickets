@@ -15,4 +15,6 @@ using ventaTickets.Models;
         public DbSet<ventaTickets.Models.Entrada> Entrada { get; set; } = default!;
 
         public DbSet<ventaTickets.Models.Show> Show { get; set; } = default!;
+
+        public DbSet<ventaTickets.Models.Usuario> Usuario { get; set; }
 }
