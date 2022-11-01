@@ -14,7 +14,7 @@ namespace ventaTickets.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "6.0.9");
+            modelBuilder.HasAnnotation("ProductVersion", "6.0.10");
 
             modelBuilder.Entity("ventaTickets.Models.Entrada", b =>
                 {
@@ -32,14 +32,12 @@ namespace ventaTickets.Migrations
                         .HasColumnType("REAL");
 
                     b.Property<string>("sector")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<int>("showId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("ubicacion")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<int>("usuarioId")
@@ -68,18 +66,15 @@ namespace ventaTickets.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("descripcion")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("direccion")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("fecha")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("imagen")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("nombre")
@@ -98,6 +93,35 @@ namespace ventaTickets.Migrations
                     b.HasKey("showId");
 
                     b.ToTable("Show");
+                });
+
+            modelBuilder.Entity("ventaTickets.Models.Usuario", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("administrador")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("dni")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("email")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("nombre")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("password")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Usuario");
                 });
 
             modelBuilder.Entity("ventaTickets.Models.Entrada", b =>

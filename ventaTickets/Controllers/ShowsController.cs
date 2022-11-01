@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using ventaTickets.Migrations;
 using ventaTickets.Models;
 
 namespace ventaTickets.Controllers
@@ -191,6 +194,7 @@ namespace ventaTickets.Controllers
             return View(await _context.Show.ToListAsync());
         }
 
+        [Authorize(Roles = "Usuario")]
         // GET: Shows/VistaCompra/5
         public async Task<IActionResult> VistaCompra(int? id)
         {
@@ -208,6 +212,10 @@ namespace ventaTickets.Controllers
 
             return View(show);
         }
+
+
+
+
 
     }
 

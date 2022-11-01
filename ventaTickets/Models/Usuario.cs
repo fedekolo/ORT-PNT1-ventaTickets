@@ -6,11 +6,18 @@ namespace ventaTickets.Models
     {
         [Key]
         public int Id { get; set; }
-        public string mail { get; set; } = "";
-        public int dni { get; set; }
+        [Required]
         public string nombre { get; set; } = "";
         public string contrasena { get; set; } = "";
         public Boolean administrador { get; set; }
 
+        public string dni { get; set; } = "";
+        [Required]
+        public string email { get; set; } = "";
+
+        [Required]
+        public string password { get; set; } = "";
+
+        public Boolean administrador { get; set; }
     }
 }
