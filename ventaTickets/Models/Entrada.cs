@@ -9,14 +9,14 @@ namespace ventaTickets.Models
         public int Id { get; set; }
         [Required]
         public int numero { get; set; }
-        public DateTime fecha { get; set; }
+        public DateTime Fecha { get; set; }
         public string ubicacion { get; set; } = "";
         public double precio { get; set; }
         public int showId { get; set; }
-        public int usuarioId { get; set; }
+        public int UsuarioId { get; set; }
         public string sector { get; set; }
 
-        public Show? show { get; set; }
+        public Show show { get; set; }
         public Entrada(int numero, string ubicacion, double precio, int showId, string sector)
             {
                 this.numero = numero;
@@ -24,7 +24,7 @@ namespace ventaTickets.Models
                 this.showId = showId;
                 this.ubicacion = ubicacion;
                 this.sector = sector;
-                usuarioId = -1;
+                UsuarioId = -1;
             }
 
     }

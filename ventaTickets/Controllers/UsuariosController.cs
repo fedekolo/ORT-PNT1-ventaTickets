@@ -33,10 +33,10 @@ namespace ventaTickets.Controllers
         // GET: Usuarios/Details/5
         public async Task<IActionResult> Details()
         {
-            if (id == null || _context.Usuario == null)
-            {
-                return NotFound();
-            }
+            //if (id == null || _context.Usuario == null)
+            //{
+            //    return NotFound();
+            //}
 
             int id = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
