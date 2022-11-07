@@ -33,8 +33,20 @@ namespace ventaTickets.Controllers
         // GET: Usuarios/Details/5
         public async Task<IActionResult> Details()
         {
+<<<<<<< HEAD
             int id = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
+=======
+          
+
+            int id = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            //if (id == null || _context.Usuario == null)
+            //{
+            //    return NotFound();
+            //}
+
+>>>>>>> controler
             var usuario = await _context.Usuario
                 .FirstOrDefaultAsync(m => m.Id == id);
 
