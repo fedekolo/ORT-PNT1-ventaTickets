@@ -233,7 +233,7 @@ namespace ventaTickets.Controllers
             return View(show);
         }
 
-<<<<<<< HEAD
+        //<<<<<<< HEAD
         [HttpPost]
         public async Task<IActionResult> Pago(Show show)
         {
@@ -241,7 +241,7 @@ namespace ventaTickets.Controllers
             return View(show);
 
         }
-=======
+
 //metodo para reservar la entrada al usuario
 
         public void confirmarEntrada(int cantidad,string sector)
@@ -251,7 +251,7 @@ namespace ventaTickets.Controllers
             //reservar la cantidad de entradas que el usuario confirmo la compra.verificar cantidad que el usuario selecciono
             if (hayCantidad(cantidad, sector))
             {
-                Console.WriteLine("Hola Mundo Desde C# Consola");
+                
 
             }
             // setear tiempo de logguin hasta que pague
@@ -273,7 +273,7 @@ namespace ventaTickets.Controllers
             return contador >= cantidad;
         }
 
->>>>>>> controler
+        //>>>>>>> controler
 
 
 
