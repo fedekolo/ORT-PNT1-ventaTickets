@@ -42,6 +42,19 @@ body {
     margin: 10px;
 }
 
+/*.btn-show {
+    display: block;
+}*/
+
+.show:hover {
+    opacity: .8;
+}
+
+/*    .show:hover .btn-show {
+        opacity: 1;
+    }*/
+
+
 /*----------FOOTER----------*/
 .footer {
     background-color: white;
