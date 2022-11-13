@@ -42,7 +42,7 @@
             <img src="@Html.DisplayFor(model => model.imagen)">
         </dd>
 
-        <form onsubmit="location.href='@Url.Action("Details", "Shows", new { id = @Model.showId})'">
+        <form action="/Shows/Pago/@Model.showId" method="post">
             <select class="form-sector" aria-label="Default select example" required>
                 <option disabled selected value="">
                     Selecciona una opción

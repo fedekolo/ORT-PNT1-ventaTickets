@@ -213,7 +213,32 @@ namespace ventaTickets.Controllers
             return View(show);
         }
 
+        [Authorize(Roles = "Usuario")]
+        // GET: Shows/Pago/5
+        public async Task<IActionResult> Pago(int? id)
+        {
+            if (id == null || _context.Show == null)
+            {
+                return NotFound();
+            }
 
+            var show = await _context.Show
+                .FirstOrDefaultAsync(m => m.showId == id);
+            if (show == null)
+            {
+                return NotFound();
+            }
+
+            return View(show);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Pago(Show show)
+        {
+
+            return View(show);
+
+        }
 
 
 

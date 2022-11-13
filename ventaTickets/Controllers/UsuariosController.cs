@@ -33,14 +33,7 @@ namespace ventaTickets.Controllers
         // GET: Usuarios/Details/5
         public async Task<IActionResult> Details()
         {
-          
-
             int id = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-
-            //if (id == null || _context.Usuario == null)
-            //{
-            //    return NotFound();
-            //}
 
             var usuario = await _context.Usuario
                 .FirstOrDefaultAsync(m => m.Id == id);
@@ -52,6 +45,7 @@ namespace ventaTickets.Controllers
 
             return View(usuario);
         }
+
         [AllowAnonymous]
         // GET: Usuarios/Create
         public IActionResult Create()
@@ -184,6 +178,18 @@ namespace ventaTickets.Controllers
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        [AllowAnonymous]
+        // GET: Usuarios/Entradas
+        public async Task<IActionResult> Entradas()
+        {
+            int id = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            IQueryable<Entrada> entradas = _context.Entrada
+                .Where(m => m.UsuarioId == id);
+
+            return View(entradas);
         }
 
         private bool UsuarioExists(int id)

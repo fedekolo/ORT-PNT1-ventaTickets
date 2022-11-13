@@ -1,0 +1,42 @@
+﻿@model IEnumerable<ventaTickets.Models.Entrada>
+
+<h3>Entradas adquiridas</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.precio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.sector)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ubicacion)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null) {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.precio)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.sector)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ubicacion)
+                    </td>
+                </tr>
+            }
+        } else {
+            <tr>
+                <td>
+                    <h3>No hay entradas</h3>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
