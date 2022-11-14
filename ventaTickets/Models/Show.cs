@@ -23,4 +23,9 @@ namespace ventaTickets.Models
         public ICollection<Entrada> entradas { get; set; } = new List<Entrada>();
 
     } 
+
+
+
+  
+   
 }

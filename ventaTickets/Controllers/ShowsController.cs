@@ -230,14 +230,28 @@ namespace ventaTickets.Controllers
                 return NotFound();
             }
 
+
+         
+            
+
             return View(show);
         }
 
         //<<<<<<< HEAD
         [HttpPost]
-        public async Task<IActionResult> Pago(Show show)
+        public async Task<IActionResult> Pago(int? id,string sector, int cantidad)
         {
+            int idUsuario = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
+            var show = await _context.Show
+              .FirstOrDefaultAsync(m => m.showId == id);
+            for (int i = 0; i < cantidad; i++)
+            {
+                var entrada = _context.Entrada.Where(e => e.UsuarioId == -1 && e.sector == sector).FirstOrDefault();
+                entrada.UsuarioId = idUsuario;
+                _context.Entrada.Update(entrada);
+                _context.SaveChanges();
+            }
             return View(show);
 
         }
