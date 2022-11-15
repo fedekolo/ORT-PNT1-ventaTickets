@@ -33,20 +33,9 @@ namespace ventaTickets.Controllers
         // GET: Usuarios/Details/5
         public async Task<IActionResult> Details()
         {
-//<<<<<<< HEAD
+
             int id = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-//=======
-          
-
-          //  id = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-
-            //if (id == null || _context.Usuario == null)
-            //{
-            //    return NotFound();
-            //}
-
-//>>>>>>> controler
             var usuario = await _context.Usuario
                 .FirstOrDefaultAsync(m => m.Id == id);
 
@@ -87,7 +76,6 @@ namespace ventaTickets.Controllers
                 {
                     return View(usuario);
                 }
-
 
             }
             return RedirectToAction("Index", "Home");
@@ -135,8 +123,6 @@ namespace ventaTickets.Controllers
                     {
                         return View(usuario);
                     }
-
-
 
                 }
                 catch (DbUpdateConcurrencyException)
@@ -198,8 +184,16 @@ namespace ventaTickets.Controllers
         {
             int id = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
+            //IQueryable<Show> shows;
+
             IQueryable<Entrada> entradas = _context.Entrada
                 .Where(m => m.UsuarioId == id);
+
+            // ----- VER -----
+            //foreach (var entrada in entradas)
+            //{
+            //    Show show = _context.Show.Where(e => e.showId == entrada.showId).FirstOrDefault();
+            //}
 
             return View(entradas);
         }

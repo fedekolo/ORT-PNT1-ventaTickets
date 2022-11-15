@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ventaTickets.Migrations;
 using ventaTickets.Models;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace ventaTickets.Controllers
 {
@@ -30,6 +31,24 @@ namespace ventaTickets.Controllers
 
         // GET: Shows/Details/5
         public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null || _context.Show == null)
+            {
+                return NotFound();
+            }
+
+            var show = await _context.Show
+                .FirstOrDefaultAsync(m => m.showId == id);
+            if (show == null)
+            {
+                return NotFound();
+            }
+
+            return View(show);
+        }
+
+        // GET: Shows/DetailsEntrada/5
+        public async Task<IActionResult> DetailsEntrada(int? id)
         {
             if (id == null || _context.Show == null)
             {
@@ -230,10 +249,6 @@ namespace ventaTickets.Controllers
                 return NotFound();
             }
 
-
-         
-            
-
             return View(show);
         }
 
@@ -245,41 +260,28 @@ namespace ventaTickets.Controllers
 
             var show = await _context.Show
               .FirstOrDefaultAsync(m => m.showId == id);
-            for (int i = 0; i < cantidad; i++)
-            {
-                var entrada = _context.Entrada.Where(e => e.UsuarioId == -1 && e.sector == sector).FirstOrDefault();
-                entrada.UsuarioId = idUsuario;
-                _context.Entrada.Update(entrada);
-                _context.SaveChanges();
-            }
-            return View(show);
 
-        }
+            ViewBag.Cantidad = cantidad;
+            ViewBag.Sector = sector;
+            ViewBag.Precio = calcularPrecio(show, sector, cantidad);
 
-//metodo para reservar la entrada al usuario
-
-        public void confirmarEntrada(int cantidad,string sector)
-        {
-            //traemos el id del usuario logueado
-            int id = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            //reservar la cantidad de entradas que el usuario confirmo la compra.verificar cantidad que el usuario selecciono
             if (hayCantidad(cantidad, sector))
             {
-                
-
+                for (int i = 0; i < cantidad; i++)
+                {
+                    var entrada = _context.Entrada.Where(e => e.UsuarioId == -1 && e.sector == sector && e.showId == id).FirstOrDefault();
+                    entrada.UsuarioId = idUsuario;
+                    _context.Entrada.Update(entrada);
+                    _context.SaveChanges();
+                }
+                return View(show);
             }
-            // setear tiempo de logguin hasta que pague
-            //llevar ala pantalla pago
 
-
-
-
-
+                return View("NoHayEntradas");
         }
 
         private Boolean hayCantidad(int cantidad, string sector)
         { 
-           
             int contador = 0;
 
             contador = _context.Entrada.Where(e => e.UsuarioId == -1 && e.sector == sector).Count();
@@ -287,9 +289,23 @@ namespace ventaTickets.Controllers
             return contador >= cantidad;
         }
 
-        //>>>>>>> controler
+        private double calcularPrecio(Show show, string sector, int cantidad)
+        {
+            double precioTotal = 0;
 
+            if(sector == "Campo")
+            {
+                precioTotal = cantidad * show.precioCampo;
+            } else if (sector == "Platea Baja")
+            {
+                precioTotal = cantidad * show.precioPlateaBaja;
+            } else
+            {
+                precioTotal = cantidad * show.precioPlateaAlta;
+            }
 
+            return precioTotal;
+        }
 
     }
 
