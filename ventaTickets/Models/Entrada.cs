@@ -15,7 +15,6 @@ namespace ventaTickets.Models
         public int showId { get; set; }
         public int UsuarioId { get; set; }
         public string sector { get; set; }
-
         public Show show { get; set; }
         public Entrada(int numero, string ubicacion, double precio, int showId, string sector)
             {

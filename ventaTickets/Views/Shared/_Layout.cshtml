@@ -54,7 +54,6 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Shows" asp-action="Create">Ingresar Show</a>
                             </li>
                         }
-                        @*         @if (User.IsInRole("Administrador") || User.IsInRole("Usuario"))*@
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">

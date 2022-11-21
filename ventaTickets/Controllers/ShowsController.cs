@@ -249,10 +249,6 @@ namespace ventaTickets.Controllers
                 return NotFound();
             }
 
-
-         
-            
-
             return View(show);
         }
 

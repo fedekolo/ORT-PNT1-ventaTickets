@@ -34,7 +34,7 @@ namespace ventaTickets.Controllers
         public async Task<IActionResult> Details()
         {
 
-          //  id = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            int id = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
             var usuario = await _context.Usuario
                 .FirstOrDefaultAsync(m => m.Id == id);
@@ -70,7 +70,6 @@ namespace ventaTickets.Controllers
                     _context.Add(usuario);
                     await _context.SaveChangesAsync();
                     return await this.Login(usuario);
-                    //return RedirectToAction(nameof(Index));
                 }
                 else
                 {
@@ -100,6 +99,7 @@ namespace ventaTickets.Controllers
         // POST: Usuarios/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [AllowAnonymous]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,nombre,dni,email,password,administrador")] Usuario usuario)
@@ -184,16 +184,8 @@ namespace ventaTickets.Controllers
         {
             int id = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-            //IQueryable<Show> shows;
-
             IQueryable<Entrada> entradas = _context.Entrada
                 .Where(m => m.UsuarioId == id);
-
-            // ----- VER -----
-            //foreach (var entrada in entradas)
-            //{
-            //    Show show = _context.Show.Where(e => e.showId == entrada.showId).FirstOrDefault();
-            //}
 
             return View(entradas);
         }
