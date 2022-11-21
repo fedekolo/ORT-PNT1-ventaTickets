@@ -233,7 +233,6 @@ namespace ventaTickets.Controllers
             return View(show);
         }
 
-        //<<<<<<< HEAD
         [HttpPost]
         public async Task<IActionResult> Pago(int? id,string sector, int cantidad)
         {
@@ -251,41 +250,14 @@ namespace ventaTickets.Controllers
             return View(show);
 
         }
-
-//metodo para reservar la entrada al usuario
-
-        public void confirmarEntrada(int cantidad,string sector)
-        {
-            //traemos el id del usuario logueado
-            int id = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            //reservar la cantidad de entradas que el usuario confirmo la compra.verificar cantidad que el usuario selecciono
-            if (hayCantidad(cantidad, sector))
-            {
-                
-
-            }
-            // setear tiempo de logguin hasta que pague
-            //llevar ala pantalla pago
-
-
-
-
-
-        }
-
         private Boolean hayCantidad(int cantidad, string sector)
         { 
-           
             int contador = 0;
 
             contador = _context.Entrada.Where(e => e.UsuarioId == -1 && e.sector == sector).Count();
 
             return contador >= cantidad;
         }
-
-        //>>>>>>> controler
-
-
 
     }
 
