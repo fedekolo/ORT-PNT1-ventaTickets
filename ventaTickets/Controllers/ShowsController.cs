@@ -266,7 +266,7 @@ namespace ventaTickets.Controllers
 
             for (int i = 0; i < cantidad; i++)
             {
-                var entrada = _context.Entrada.Where(e => e.UsuarioId == -1 && e.sector == sector).FirstOrDefault();
+                var entrada = _context.Entrada.Where(e => e.UsuarioId == -1 && e.sector == sector && e.showId == show.showId).FirstOrDefault();
                 entrada.UsuarioId = idUsuario;
                 _context.Entrada.Update(entrada);
                 _context.SaveChanges();
