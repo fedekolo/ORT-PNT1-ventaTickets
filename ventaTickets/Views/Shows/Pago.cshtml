@@ -1,33 +1,52 @@
 ﻿@model ventaTickets.Models.Show
-
 <h1>Vista de compra</h1>
 
 <div>
+    <h4>Detalle de compra</h4>
     <h4>Show</h4>
     <dl class="row">
         <dt class="col-sm-2">
+            Show
             @Html.DisplayNameFor(model => model.nombre)
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.nombre)
         </dd>
+        <dt class="col-sm-2">
+            Cantidad
+        </dt>
+        <dd class="col-sm-10">
+            @ViewBag.Cantidad
+        </dd>
+        <dt class="col-sm-2">
+            Sector
+        </dt>
+        <dd class="col-sm-10">
+            @ViewBag.Sector
+        </dd>
+        <dt class="col-sm-2">
+            Precio total
+        </dt>
+        <dd class="col-sm-10">
+            $@ViewBag.Precio
+        </dd>
 
         <form action="/Pago/agregarEntradas/" class="row g-3">
             <div class="col-md-6">
                 <label for="inputEmail4" class="form-label">Nombre y apellido</label>
-                <input type="email" class="form-control" id="inputEmail4">
+                <input type="text" class="form-control" id="inputEmail4" required>
             </div>
             <div class="col-md-6">
                 <label for="inputPassword4" class="form-label">Dni</label>
-                <input type="password" class="form-control" id="inputPassword4">
+                <input type="text" class="form-control" id="inputPassword4" pattern="[0-9]+" maxlength="10" minlength="7" required>
             </div>
             <div class="col-10">
                 <label for="inputAddress" class="form-label">Número de tarjeta</label>
-                <input type="text" class="form-control" id="inputAddress">
+                <input type="number" class="form-control" id="inputAddress" required>
             </div>
             <div class="col-md-2">
                 <label for="inputCity" class="form-label">Codigo de seguridad</label>
-                <input type="text" class="form-control" id="inputCity">
+                <input type="text" class="form-control" id="inputCity" pattern="[0-9]+" maxlength="3" minlength="3" required>
             </div>
             <div class="col-12">
                 <button type="submit" class="btn btn-primary">Finalizar compra</button>
@@ -35,7 +54,6 @@
         </form>
     </dl>
 </div>
-
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.showId">Edit</a> |
     <a asp-action="Index">Back to List</a>

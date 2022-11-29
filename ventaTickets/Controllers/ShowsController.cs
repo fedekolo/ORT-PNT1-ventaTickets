@@ -233,6 +233,25 @@ namespace ventaTickets.Controllers
             return View(show);
         }
 
+        [Authorize(Roles = "Usuario")]
+        // GET: Shows/DetailsEntrada/5
+        public async Task<IActionResult> DetailsEntrada(int? id)
+        {
+            if (id == null || _context.Show == null)
+            {
+                return NotFound();
+            }
+
+            var show = await _context.Show
+                .FirstOrDefaultAsync(m => m.showId == id);
+            if (show == null)
+            {
+                return NotFound();
+            }
+
+            return View(show);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Pago(int? id,string sector, int cantidad)
         {
@@ -240,6 +259,11 @@ namespace ventaTickets.Controllers
 
             var show = await _context.Show
               .FirstOrDefaultAsync(m => m.showId == id);
+
+            ViewBag.Cantidad = cantidad;
+            ViewBag.Sector = sector;
+            ViewBag.Precio = calcularPrecio(show, sector, cantidad);
+
             for (int i = 0; i < cantidad; i++)
             {
                 var entrada = _context.Entrada.Where(e => e.UsuarioId == -1 && e.sector == sector).FirstOrDefault();
@@ -257,6 +281,26 @@ namespace ventaTickets.Controllers
             contador = _context.Entrada.Where(e => e.UsuarioId == -1 && e.sector == sector).Count();
 
             return contador >= cantidad;
+        }
+
+        private double calcularPrecio(Show show, string sector, int cantidad)
+        {
+            double precioTotal = 0;
+
+            if (sector == "Campo")
+            {
+                precioTotal = cantidad * show.precioCampo;
+            }
+            else if (sector == "Platea Baja")
+            {
+                precioTotal = cantidad * show.precioPlateaBaja;
+            }
+            else
+            {
+                precioTotal = cantidad * show.precioPlateaAlta;
+            }
+
+            return precioTotal;
         }
 
     }

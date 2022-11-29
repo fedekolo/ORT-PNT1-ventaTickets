@@ -12,22 +12,7 @@ namespace ventaTickets.Controllers
         public async Task<IActionResult> agregarEntradas()
         {
 
-
-        
             return RedirectToAction("Entradas", "Usuarios");
-
-
-
-
-           
-
-
-
-
-
-
-
-
 
         }
     }
