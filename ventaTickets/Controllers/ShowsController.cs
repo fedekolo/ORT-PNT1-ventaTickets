@@ -233,25 +233,6 @@ namespace ventaTickets.Controllers
             return View(show);
         }
 
-        [Authorize(Roles = "Usuario")]
-        // GET: Shows/DetailsEntrada/5
-        public async Task<IActionResult> DetailsEntrada(int? id)
-        {
-            if (id == null || _context.Show == null)
-            {
-                return NotFound();
-            }
-
-            var show = await _context.Show
-                .FirstOrDefaultAsync(m => m.showId == id);
-            if (show == null)
-            {
-                return NotFound();
-            }
-
-            return View(show);
-        }
-
         [HttpPost]
         public async Task<IActionResult> Pago(int? id,string sector, int cantidad)
         {
@@ -276,7 +257,6 @@ namespace ventaTickets.Controllers
         }
         private Boolean hayCantidad(int cantidad, string sector)
         { 
-            int contador = 0;
 
             contador = _context.Entrada.Where(e => e.UsuarioId == -1 && e.sector == sector).Count();
 

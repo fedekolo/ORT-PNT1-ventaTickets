@@ -28,14 +28,9 @@ namespace ventaTickets.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(Usuario _usuario)
         {
-
             return await this.Login(_usuario);
 
         }
-
-
-
-
         public async Task<IActionResult> Salir()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
