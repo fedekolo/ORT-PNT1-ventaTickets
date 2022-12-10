@@ -179,12 +179,40 @@ namespace ventaTickets.Controllers
 
         [AllowAnonymous]
         // GET: Usuarios/Entradas
-        public async Task<IActionResult> Entradas()
+        public IActionResult Entradas()
         {
             int id = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-
+           
             IQueryable<Entrada> entradas = _context.Entrada
                 .Where(m => m.UsuarioId == id);
+
+
+            var Shows = _context.Show;
+
+            int contador = 0;
+
+            String[] vectorNom = new String[Shows.Count()];
+
+            var idAnterior = -1;
+
+            foreach (var item in entradas)
+            {
+
+                if(item.showId != idAnterior)
+                {
+                    idAnterior = item.showId;
+                    vectorNom [contador] = Shows.First(e => e.showId == idAnterior).descripcion;
+                    contador++;
+
+                }
+
+            }
+
+
+            ViewBag.nomShows = vectorNom;
+
+
+         
 
             return View(entradas);
         }

@@ -1,0 +1,55 @@
+﻿@model IEnumerable<ventaTickets.Models.Show>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 >Registro de Ventas</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Nombre del Show
+            </th>
+            <th>
+                unidades vendidas
+            </th>
+            <th>
+                Disponibles
+            </th>
+            <th>
+                Total recaudado
+            </th>
+            <th>
+                Entradas totales
+            </th>
+        </tr>
+    </thead>
+ <tbody>
+
+       
+@for(int i = 0; i < Model.Count(); i++)
+{
+     <tr>
+            <td>
+                    @Html.DisplayName(Model.ElementAt(i).descripcion)
+            </td>
+             <td>
+                    @ViewBag.cantEntradasVendidas[i]
+            </td>
+             <td>
+                    @ViewBag.cantEntradasDisponiles[i]
+            </td>
+            <td>
+                    @ViewBag.totalRecaudado[i]
+            </td>
+             <td>
+                    @ViewBag.disponibles[i]
+            </td>
+            </tr>
+
+}
+    </tbody>
+</table>

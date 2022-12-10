@@ -1,9 +1,12 @@
 ﻿@model IEnumerable<ventaTickets.Models.Entrada>
 
-<h3>Entradas adquiridas</h3>
+<h3>Tickets Comprados</h3>
 <table class="table">
     <thead>
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.show)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.precio)
             </th>
@@ -14,15 +17,31 @@
                 @Html.DisplayNameFor(model => model.ubicacion)
             </th>
             <th>
-                Detalles
+                Ticket
             </th>
         </tr>
     </thead>
     <tbody>
         @if (Model.Count() != 0) {
+
+         
+               int contador = -1;
+               int showid = -1;
+
+
             @foreach (var item in Model)
             {
+                if (item.showId != showid)
+                {
+                    showid = item.showId;
+                    contador++;
+                }
+                
                 <tr>
+                    <td>
+                        @ViewBag.nomShows[contador]
+                    </td>
+
                     <td>
                         $@Html.DisplayFor(modelItem => item.precio)
                     </td>
@@ -33,7 +52,7 @@
                         @Html.DisplayFor(modelItem => item.ubicacion)
                     </td>
                     <td>
-                        <a href="/Shows/DetailsEntrada/@Html.DisplayFor(modelItem => item.showId)">Ver detalles</a>
+                        <a href="/Shows/DetailsEntrada/@Html.DisplayFor(modelItem => item.Id)">Imprimir</a>
                     </td>
                 </tr>
             }

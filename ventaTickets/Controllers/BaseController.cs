@@ -21,7 +21,7 @@ namespace Validacion_cookies.Controllers
         }
         public async Task<IActionResult> Login(Usuario _usuario)
         {
-
+            
             var usuario = validarUsuario(_usuario.email, _usuario.password);
 
             if (usuario != null)
@@ -50,11 +50,11 @@ namespace Validacion_cookies.Controllers
                 return RedirectToAction("Index", "Home");
             }
             else
-            {
+            {               
                 return View();
             }
 
-
+            
 
         }
     }

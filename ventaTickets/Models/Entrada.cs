@@ -23,7 +23,7 @@ namespace ventaTickets.Models
                 this.showId = showId;
                 this.ubicacion = ubicacion;
                 this.sector = sector;
-                UsuarioId = -1;
+                this.UsuarioId = -1;
             }
 
     }

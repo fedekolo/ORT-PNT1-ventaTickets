@@ -1,15 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Versioning;
+using QRCoder;
 using ventaTickets.Migrations;
 using ventaTickets.Models;
+
+
+
+
 
 namespace ventaTickets.Controllers
 {
@@ -104,6 +112,7 @@ namespace ventaTickets.Controllers
                     editarEntradas(show);
                     _context.Update(show);
                     await _context.SaveChangesAsync();
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -182,11 +191,17 @@ namespace ventaTickets.Controllers
             }
         }
 
-        private void editarEntradas(Show show)
+        private async void editarEntradas(Show show)
         {
+            var entradas = _context.Entrada.Where(e => e.showId == show.showId);
+
             show.entradas.Clear();
 
+            entradas.ExecuteDelete();
+
             generarEntradas(show);
+
+            await _context.SaveChangesAsync();
         }
 
         // GET: Index2
@@ -194,6 +209,8 @@ namespace ventaTickets.Controllers
         {
             return View(await _context.Show.ToListAsync());
         }
+
+
 
         [Authorize(Roles = "Usuario")]
         // GET: Shows/VistaCompra/5
@@ -210,6 +227,13 @@ namespace ventaTickets.Controllers
             {
                 return NotFound();
             }
+
+            ViewBag.entradasCampos = cantidadPorSector("Campo", id) ;
+            ViewBag.entradasPA = cantidadPorSector("Platea Alta",id) ;
+            ViewBag.entradasPB = cantidadPorSector("Platea Baja",id) ;
+
+
+
 
             return View(show);
         }
@@ -229,39 +253,98 @@ namespace ventaTickets.Controllers
             {
                 return NotFound();
             }
-
+            
             return View(show);
         }
 
         [HttpPost]
         public async Task<IActionResult> Pago(int? id,string sector, int cantidad)
         {
-            int idUsuario = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            if (hayCantidad(id, sector, cantidad))
+            {
 
+            
+            int idUsuario = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+           
             var show = await _context.Show
               .FirstOrDefaultAsync(m => m.showId == id);
 
+
+            double precio = calcularPrecio(show, sector, cantidad);
             ViewBag.Cantidad = cantidad;
             ViewBag.Sector = sector;
-            ViewBag.Precio = calcularPrecio(show, sector, cantidad);
+            ViewBag.Precio = precio;
 
             for (int i = 0; i < cantidad; i++)
             {
                 var entrada = _context.Entrada.Where(e => e.UsuarioId == -1 && e.sector == sector && e.showId == show.showId).FirstOrDefault();
                 entrada.UsuarioId = idUsuario;
                 _context.Entrada.Update(entrada);
-                _context.SaveChanges();
-            }
+                _context.SaveChanges(); 
+            } 
+
             return View(show);
-
+            }
+            else
+            {
+                return View("NoHayEntradas");
+            }
         }
-        private Boolean hayCantidad(int cantidad, string sector)
-        { 
 
-            contador = _context.Entrada.Where(e => e.UsuarioId == -1 && e.sector == sector).Count();
+        [Authorize(Roles = "Usuario")]
+        // GET: Shows/DetailsEntrada/5
+        public async Task<IActionResult> DetailsEntrada(int? id)
+        {
 
-            return contador >= cantidad;
+             var entrada = await _context.Entrada.FirstOrDefaultAsync(e => e.Id ==id);
+
+            if (id == null || _context.Show == null)
+            {
+                return NotFound();
+            }
+
+            var show = await _context.Show.FirstOrDefaultAsync(m => m.showId == entrada.showId);
+
+            if (show == null)
+            {
+                return NotFound();
+            }
+
+            int idUsuario = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var usuario = _context.Usuario.Where(e => e.Id == idUsuario).FirstOrDefault();
+             
+            string idQr = "idEntrada"+id.ToString()+"-ShowId" + show.showId.ToString() + "-" + usuario.email ;
+
+
+            QRCodeGenerator qrGenerator = new QRCodeGenerator();
+            QRCodeData qRCodeData = qrGenerator.CreateQrCode(idQr, QRCodeGenerator.ECCLevel.Q);
+            PngByteQRCode qrCode = new PngByteQRCode(qRCodeData);
+            byte[] qrCodeImage = qrCode.GetGraphic(20);
+            string model = Convert.ToBase64String(qrCodeImage);
+
+
+            ViewBag.qrCodeImage = model;
+
+
+            return View(show);
         }
+
+        private int cantidadPorSector(string sector, int? id)
+        {
+
+            int contador = _context.Entrada.Where(e => e.UsuarioId == -1 && e.sector == sector && e.showId == id).Count();
+
+            return contador;
+        }
+        private Boolean hayCantidad(int? id, string sector, int cantidad)
+        {
+
+            int contador = _context.Entrada.Where(e => e.UsuarioId == -1 && e.sector == sector && e.showId == id).Count();
+
+            return contador>= cantidad;
+        }
+
+
 
         private double calcularPrecio(Show show, string sector, int cantidad)
         {
@@ -283,6 +366,77 @@ namespace ventaTickets.Controllers
             return precioTotal;
         }
 
-    }
 
+
+
+
+
+
+        //metodo para ver las cantidad de entradas vendidas
+        public async Task<IActionResult> Index3()
+        {
+            var shows = await _context.Show.ToListAsync();
+            int contador = 0;
+            int[] vectorCantVendidas = new int[shows.Count];
+            int[] vectorCantDisponibles = new int[shows.Count];
+            int[] vectorRestan = new int[shows.Count];
+            double[]vectorTotalRecaudado = new double[shows.Count];
+            foreach (var item in shows)
+            {
+                vectorCantVendidas[contador] = cantidadEntradasVendidas(item);
+                vectorCantDisponibles[contador] = cantidadEntradasDisponibles(item);
+                vectorRestan[contador] =  vectorCantVendidas[contador] + vectorCantDisponibles[contador];
+                vectorTotalRecaudado[contador] = calcularTotalVendido(item);
+                contador++;
+            }
+
+
+            ViewBag.cantEntradasVendidas = vectorCantVendidas;
+            ViewBag.cantEntradasDisponiles = vectorCantDisponibles;
+            ViewBag.disponibles = vectorRestan;
+            ViewBag.totalRecaudado = vectorTotalRecaudado;
+
+            return View(shows);
+        }
+
+        private double calcularTotalVendido(Show show)
+        {   
+            double total = 0;
+            var entradas = _context.Entrada.Where(e => e.UsuarioId != -1 && e.showId == show.showId);
+            foreach (var item in entradas)
+            {
+                total += item.precio;
+            }
+
+
+            return total;
+        }
+
+
+        private int cantidadEntradasVendidas(Show show)
+        {
+            int contador = 0;
+
+            contador = _context.Entrada.Where(e => e.UsuarioId != -1 &&  e.showId == show.showId).Count();
+
+            return contador;
+        }
+
+        private int cantidadEntradasDisponibles(Show show)
+        {
+            int contador = 0;
+
+            contador = _context.Entrada.Where(e => e.UsuarioId == -1 && e.showId == show.showId).Count();
+
+            return contador;
+        }
+
+
+
+
+
+
+
+    }
+    
 }

@@ -1,9 +1,9 @@
 ﻿@model ventaTickets.Models.Show
-<h1>Vista de compra</h1>
+
 
 <div>
     <h4>Detalle de compra</h4>
-    <h4>Show</h4>
+   
     <dl class="row">
         <dt class="col-sm-2">
             Show
@@ -31,30 +31,41 @@
             $@ViewBag.Precio
         </dd>
 
-        <form action="/Pago/agregarEntradas/" class="row g-3">
-            <div class="col-md-6">
+        <dd class="col-sm-10">
+            <img  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKV3bVKgMl6G2QMUg-QEFetJ6JSjAoo38hDMUxwQZWTbjIJQIB0dK1gGfIUlbHp3V8n3s&usqp=CAU" />
+        </dd>
+        <form asp-controller="Mails" asp-action="confirmacionPago" method="post">
+            <div class="mb-3">
                 <label for="inputEmail4" class="form-label">Nombre y apellido</label>
-                <input type="text" class="form-control" id="inputEmail4" required>
+                <input type="text" class="form-control" name="nomCompleto" required />
             </div>
-            <div class="col-md-6">
-                <label for="inputPassword4" class="form-label">Dni</label>
-                <input type="text" class="form-control" id="inputPassword4" pattern="[0-9]+" maxlength="10" minlength="7" required>
+            <div class="mb-3">
+                <label for="inputEmail4" class="form-label">Dni</label>
+                <input type="text" class="form-control" name="dni" pattern="[0-9]+" maxlength="10" minlength="7" required />
             </div>
-            <div class="col-10">
-                <label for="inputAddress" class="form-label">Número de tarjeta</label>
-                <input type="number" class="form-control" id="inputAddress" required>
+            <div class="mb-3">
+                <label for="inputEmail4" class="form-label">Número de tarjeta</label>
+                <input type="text" class="form-control" name="numTarjeta" required />
             </div>
-            <div class="col-md-2">
-                <label for="inputCity" class="form-label">Codigo de seguridad</label>
-                <input type="text" class="form-control" id="inputCity" pattern="[0-9]+" maxlength="3" minlength="3" required>
+            <div class="mb-3">
+                <label for="inputEmail4" class="form-label">Codigo de seguridad</label>
+                <input type="text" class="form-control" name="nomCompleto" pattern="[0-9]+" maxlength="3" minlength="3" required />
             </div>
-            <div class="col-12">
-                <button type="submit" class="btn btn-primary">Finalizar compra</button>
-            </div>
+
+            <button type="submit" class="btn btn-primary">Enviar</button>
         </form>
+
+        <dd class="col-sm-10">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXXnHuUxJ70tbkMfuLVcbq6iqhMHC7W54lsg&usqp=CAU" />         
+        </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.showId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    @if (User.IsInRole("Administrador"))
+    {
+        <a asp-action="Edit" asp-route-id="@Model?.showId">Edit</a>
+ 
+    }
+
+    <a asp-controller="Home" asp-action="Index">Back to List</a>
 </div>

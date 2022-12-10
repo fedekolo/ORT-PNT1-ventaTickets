@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
+<h1>Ticket</h1>
 
 <div>
     <h4>Show</h4>
@@ -29,18 +29,16 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.direccion)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.imagen)
-        </dt>
-        <dd class = "col-sm-10">
-            <img src="@Html.DisplayFor(model => model.imagen)">
-        </dd>
-       
-        <dt class = "col-sm-2">
+                <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.fecha)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.fecha)
+        </dd>
+        <dd class = "col-sm-10">         
+
+            <img width="200" height="200" src="data:image/png;base64,@ViewBag.qrCodeImage " />
+            <img src="@Html.DisplayFor(model => model.imagen)">
         </dd>
 
     </dl>

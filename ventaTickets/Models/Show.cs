@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace ventaTickets.Models
 {
@@ -22,10 +23,17 @@ namespace ventaTickets.Models
         public DateTime fecha { get; set; }
         public ICollection<Entrada> entradas { get; set; } = new List<Entrada>();
 
-    } 
+        
 
 
 
-  
-   
+
+    }
+
+
+
+
+
+
+
 }

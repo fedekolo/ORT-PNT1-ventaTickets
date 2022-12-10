@@ -1,5 +1,5 @@
 ﻿@model ventaTickets.Models.Show
-
+<body style="background: #314755;background: -webkit-linear-gradient(to left, #26a0da, #314755);background: linear-gradient(to left, #26a0da, #314755);">
 @{
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -35,30 +35,48 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.fecha)
         </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.imagen)
-        </dt>
         <dd class="col-sm-10">
             <img src="@Html.DisplayFor(model => model.imagen)">
         </dd>
 
-       <form action="/Shows/Pago/" method="post">
-            <select name="sector" class="form-sector" aria-label="Default select example" required>
+       
+        <form action="/Shows/Pago/" method="post">
+            <select name="sector" id="selector" class="form-sector" aria-label="Default select example" required >
                 <option disabled selected value="">
                     Selecciona una opción
                 </option>
-                <option value="Campo">
-                    Campo - $@Model.precioCampo
+                @if(ViewBag.entradasCampos>0){                 
+                    <option  value="Campo" >
+                        Campo/ disponibles: @ViewBag.entradasCampos - $@Model.precioCampo
                 </option>
-                <option value="Platea Baja">
-                    Platea Baja - $@Model.precioPlateaBaja
+                }else{
+                    <option disabled value="Campo">
+                    Campo - Agotado
                 </option>
-                <option value="Platea Alta">
-                    Platea Alta - $@Model.precioPlateaAlta
+                }       
+                @if (ViewBag.entradasPB>0)
+                {
+                    <option value="Platea Baja">
+                        Platea Baja/ disponibles: @ViewBag.entradasPB - $@Model.precioPlateaBaja
                 </option>
+                }else{
+                    <option disabled value="Platea Baja">
+                        Platea Baja/ - Agotado
+                </option>
+                }
+                @if (ViewBag.entradasPA>0)
+                {
+                    <option value="Platea Alta">
+                        Platea Alta disponibles: @ViewBag.entradasPA- $@Model.precioPlateaAlta
+                </option>
+                }else{
+                    <option disabled value="Platea Alta">
+                        Platea Alta - Agotado
+                </option>
+                }
             </select>
 
-            <input name="cantidad"  type="number" class="form-control" min="1" max="5" required>
+            <input name="cantidad" type="number" class="form-control" min="1" max="5" required>
             <button type="submit" class="btn btn-success btn-lg">Confirmar compra</button>
             <input type="hidden" name="id" value="@Model.showId"/>
             
@@ -66,6 +84,15 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.showId">Edit</a> |
-    <a asp-action="index2">Volver a la Cartelera</a>
+       @if (User.IsInRole("Administrador"))
+    {
+        <a asp-action="Edit" asp-route-id="@Model?.showId">Edit</a>
+ 
+    }
+
+    <a asp-action="index2">Volver</a>
 </div>
+
+
+</body>
+
